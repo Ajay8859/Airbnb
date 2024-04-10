@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.AuthenticationFilter;
 @Configuration
 public class SecurityConfig {
 
-      private JWTRequestFilter jwtRequestFilter;
+    private JWTRequestFilter jwtRequestFilter;
 
     public SecurityConfig(JWTRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
@@ -26,7 +26,5 @@ public class SecurityConfig {
           return http.build();
 
       }
-
-
 
 }
