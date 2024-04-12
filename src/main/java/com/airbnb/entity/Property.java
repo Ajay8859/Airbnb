@@ -1,5 +1,6 @@
 package com.airbnb.entity;
 
+
 import jakarta.persistence.*;
 
 @Entity
