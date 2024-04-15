@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface PropertyRepository extends JpaRepository<Property,Long> {
 
-    @Query("select p from Property p JOIN Location l on p.location=l.id JOIN Country c on p.country=c.id  where l.locationName=:locationName or c.countryName=:locationName")
+    @Query("select p from Property p JOIN Location l on p.location=l.id JOIN Country c on p.country=c.id  " +
+            "where l.locationName=:locationName or c.countryName=:locationName")
     List<Property> findPropertyByLocation(@Param("locationName") String locationName);
+
 
 }

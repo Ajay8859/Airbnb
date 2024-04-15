@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,15 +32,24 @@ public class ReviewController {
             @RequestBody Review review,
             @AuthenticationPrincipal PropertyUser user){
 
-        Review r = reviewRepository.findReviewByUserIdAndPropertyId(user.getId(),propertyId);
-        if(r!=null){
-            return new ResponseEntity<>("You have already added a review for this",HttpStatus.FORBIDDEN);
-        }
+
         Optional<Property> opProperty = propertyRepository.findById(propertyId);
         Property property = opProperty.get();
+        Review r = reviewRepository.findReviewByUser(property, user);
+        if(r!=null){
+            return new ResponseEntity<>("You have already added a review for this property",HttpStatus.FORBIDDEN);
+        }
+
         review.setProperty(property);
         review.setPropertyUser(user);
         reviewRepository.save(review);
         return new ResponseEntity<>("Review added successfully", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/userReviews")
+    public ResponseEntity<List<Review>> getUserReviews(@AuthenticationPrincipal PropertyUser propertyUser){
+
+        List<Review> reviews = reviewRepository.findByPropertyUser(propertyUser);
+        return new ResponseEntity<>(reviews,HttpStatus.OK);
     }
 }
