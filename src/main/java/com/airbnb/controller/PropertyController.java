@@ -1,5 +1,6 @@
 package com.airbnb.controller;
 
+import com.airbnb.entity.Country;
 import com.airbnb.entity.Property;
 import com.airbnb.repository.PropertyRepository;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,14 @@ public class PropertyController {
         this.propertyRepository = propertyRepository;
     }
 
-    @GetMapping("/{locationName}")
-    public ResponseEntity<List<Property>> findProperty(@PathVariable String locationName){
+    @GetMapping("/{locCounName}")
+    public ResponseEntity<List<Property>> findProperty(@PathVariable String locCounName){
 
-        List<Property> properties = propertyRepository.findPropertyByLocation(locationName);
+        List<Property> properties = propertyRepository.findPropertyByLocationOrCountry(locCounName);
         return new ResponseEntity<>(properties, HttpStatus.OK);
     }
+
+
+
+
 }

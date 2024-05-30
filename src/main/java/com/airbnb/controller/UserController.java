@@ -22,19 +22,15 @@ public class UserController {
 
     @PostMapping("/addUser")
     public ResponseEntity<String> addUser(@RequestBody PropertyUserDto propertyUserDto){
-
         PropertyUser propertyUser = userService.addUser(propertyUserDto);
         if(propertyUser!=null){
             return new ResponseEntity<>("Registration is successful", HttpStatus.CREATED);
         }
-
         return new ResponseEntity<>("Something went wrong",HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto){
-
         String token = userService.verifyLogin(loginDto);
         if(token!=null){
             TokenResponse tokenResponse=new TokenResponse();
@@ -44,10 +40,9 @@ public class UserController {
         return new ResponseEntity<>("In  valid credentials",HttpStatus.UNAUTHORIZED);
     }
 
+    //Which user logged in
     @GetMapping("/profile")
-    public PropertyUser getCurrentUserProfile(@AuthenticationPrincipal PropertyUser user){
-        return user;
+    public ResponseEntity<PropertyUser> getCurrentUserProfile(@AuthenticationPrincipal PropertyUser user){
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
-
-
 }

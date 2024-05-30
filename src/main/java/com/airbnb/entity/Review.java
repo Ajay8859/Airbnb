@@ -1,5 +1,6 @@
 package com.airbnb.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,7 @@ public class Review {
     @JoinColumn(name="property_id")
     private Property property;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="property_user_id")
     private PropertyUser propertyUser;
